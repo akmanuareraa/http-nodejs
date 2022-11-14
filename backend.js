@@ -32,6 +32,10 @@ app.listen(5000, () => {
   console.log("HTTP Server Started @ 5000");
 });
 
+app.get("/test", (req, res) => {
+  res.send("Hello World");
+});
+
 app.post("/createtweet", async (req, res) => {
   try {
     const { data: createdTweet } = await client.v2.tweet(req.body.text);
