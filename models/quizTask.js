@@ -12,7 +12,7 @@ var answerSchema = new Schema({
     required: [true, "Type of the answer not provided"],
   },
   data: {
-    type: Buffer,
+    type: String,
     required: [true, "Text is not provided for the answer"],
   },
   isCorrect: {
@@ -29,7 +29,7 @@ var questionSchema = new Schema({
       required: [true, "Type of the question not provided"],
     },
     data: {
-      type: Buffer,
+      type: String,
       required: [true, "Data Source not provided"],
     },
     text: {
