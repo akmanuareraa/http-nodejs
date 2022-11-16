@@ -10,9 +10,13 @@ var express = require("express"),
   isSignedIn = require("../middlewares/isSignedIn.js"),
   isLoggedIn = require("../middlewares/auth");
 
+var { addQuestion } = require("../controllers/addTasks.js");
+
 router.get("/nonce", (req, res) => generateNonce(req, res));
 
 router.post("/admin/register", signup, function (req, res) {});
+
+router.post("/admin/addquestion", addQuestion, function (req, res) {});
 
 router.post("/admin/login", (req, res) => adminsignin(req, res));
 
