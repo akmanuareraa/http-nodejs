@@ -17,7 +17,6 @@ exports.addQuestion = async (req, res) => {
       } else {
         res.status(200).send({
           message: "Question Added successfully",
-          det: doc,
         });
       }
     }
