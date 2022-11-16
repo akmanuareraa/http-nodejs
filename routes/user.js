@@ -12,6 +12,8 @@ var express = require("express"),
 
 router.get("/nonce", (req, res) => generateNonce(req, res));
 
+router.post("/admin/register", signup, function (req, res) {});
+
 router.post("/admin/login", (req, res) => adminsignin(req, res));
 
 router.get("/admin/data", verifyToken, (req, res) => {

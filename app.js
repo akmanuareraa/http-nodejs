@@ -15,10 +15,13 @@ const express = require("express"),
 
 //Connect to database
 try {
-  mongoose.connect("mongodb://localhost:27017/usersdb", {
-    useUnifiedTopology: true,
-    useNewUrlParser: true,
-  });
+  mongoose.connect(
+    "mongodb+srv://manuareraa:dehidden@manu-personal-cluster.nkqft.mongodb.net/usersdb",
+    {
+      useUnifiedTopology: true,
+      useNewUrlParser: true,
+    }
+  );
   console.log("connected to db");
 } catch (error) {
   handleError(error);
@@ -91,4 +94,3 @@ app.get("/logout", (req, res) => {
   req.logout();
   res.redirect("/");
 });
-
