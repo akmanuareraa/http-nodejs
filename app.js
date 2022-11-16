@@ -2,7 +2,7 @@
 const cookieSession = require("cookie-session");
 const session = require("express-session");
 const passport = require("passport");
-// var bodyParser = require("body-parser");
+var bodyParser = require("body-parser");
 require("./passport");
 
 //Configure dotenv files above using any other library and files
@@ -13,6 +13,9 @@ const express = require("express"),
   app = express(),
   mongoose = require("mongoose"),
   userRoutes = require("./routes/user");
+
+app.use(express.json({ limit: 5000000 }));
+app.use(express.urlencoded({ limit: 5000000, extended: true }));
 
 //Connect to database
 try {
@@ -84,10 +87,22 @@ app.use(
   })
 );
 
+// app.use(
+//   bodyParser.json({
+//     limit: "50mb",
+//   })
+// );
+
+// app.use(
+//   bodyParser.urlencoded({
+//     limit: "50mb",
+//     parameterLimit: 100000,
+//     extended: true,
+//   })
+// );
+
 // app.use(bodyParser.json({ limit: "10mb" }));
 // app.use(express.bodyParser({limit: '50mb'}));
-app.use(express.json({ limit: "50mb" }));
-app.use(express.urlencoded({ limit: "50mb" }));
 
 //using user route
 app.use(userRoutes);

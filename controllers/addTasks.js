@@ -3,7 +3,7 @@ var quizTask = require("../models/quizTask");
 exports.addQuestion = async (req, res) => {
   const quiz = new quizTask(req.body);
 
-  //   console.log("AQ: ", req.body, parseInt(req.body.doc_id) === 1);
+  console.log("/addquestion API called")
 
   quizTask.findOneAndUpdate(
     { doc_id: req.body.doc_id },
