@@ -5,7 +5,7 @@
   "author": "Aiden Bai",
   "license": "MIT",
   "scripts": {
-    "start": "node index.js"
+    "start": "node app.js"
   },
   "dependencies": {
     "axios": "^1.1.3",
