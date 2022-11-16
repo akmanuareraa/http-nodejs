@@ -9,12 +9,6 @@ router.get("/nonce", (req, res) => generateNonce(req, res));
 
 router.post("/login", (req, res) => signin(req, res));
 
-router.get("/validation", isSignedIn, function (req, res) {
-  res.status(200).send({
-    message: "Access Approved",
-  });
-});
-
 router.post("/posttweet", isSignedIn, async function (req, res) {
   try {
     const { data: createdTweet } = await client.v2.tweet(req.body.text);
@@ -33,7 +27,7 @@ router.post("/posttweet", isSignedIn, async function (req, res) {
   }
 });
 
-router.post("postreply", isSignedIn, async function (req, res) {
+router.post("/postreply", isSignedIn, async function (req, res) {
   try {
     const { data: createdTweet } = await client.v2.reply(
       req.body.text,
