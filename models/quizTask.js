@@ -5,6 +5,22 @@ var mongoose = require("mongoose"),
  * Quiz Task Schema
  */
 
+var answerSchema = new Schema({
+  type: {
+    type: String,
+    enum: ["text", "image", "audio", "video"],
+    required: [true, "Type of the answer not provided"],
+  },
+  data: {
+    type: String,
+    required: [true, "Text is not provided for the answer"],
+  },
+  isCorrect: {
+    type: Boolean,
+    required: [true, "Please specify if the answer is correct or not"],
+  },
+});
+
 var quizTaskSchema = new Schema(
   {
     question: {
@@ -26,22 +42,11 @@ var quizTaskSchema = new Schema(
         enum: ["checkbox", "radio"],
         required: [true, "Choices type not provided"],
       },
-      answers: [
-        {
-          "type": {
-            type: String,
-            enum: ["text", "image", "audio", "video"],
-            required: [true, "Type of the answer not provided"],
-          },
-          "data": {
-            type: String,
-            required: [true, "Text is not provided for the answer"],
-          },
-          "isCorrect": {
-            type: Boolean,
-          },
-        },
-      ],
+    },
+    answers: {
+      type: [answerSchema],
+      default: undefined,
+      required: [true, "Answer type not provided"],
     },
   },
   {

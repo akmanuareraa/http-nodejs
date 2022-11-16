@@ -11,12 +11,14 @@ var express = require("express"),
   isLoggedIn = require("../middlewares/auth");
 
 var { addQuestion } = require("../controllers/addTasks.js");
+var { getTasks } = require("../controllers/getTasks.js");
 
 router.get("/nonce", (req, res) => generateNonce(req, res));
 
 router.post("/admin/register", signup, function (req, res) {});
 
 router.post("/admin/addquestion", addQuestion, function (req, res) {});
+router.get("/admin/getquestions", getTasks, function (req, res) {});
 
 router.post("/admin/login", (req, res) => adminsignin(req, res));
 
