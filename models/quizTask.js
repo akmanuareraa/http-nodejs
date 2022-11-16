@@ -21,32 +21,41 @@ var answerSchema = new Schema({
   },
 });
 
+var questionSchema = new Schema({
+  question: {
+    type: {
+      type: String,
+      enum: ["image", "audio", "video"],
+      required: [true, "Type of the question not provided"],
+    },
+    data: {
+      type: String,
+      required: [true, "Data Source not provided"],
+    },
+    text: {
+      type: String,
+      required: [true, "Question text not provided"],
+    },
+    choices: {
+      type: String,
+      enum: ["checkbox", "radio"],
+      required: [true, "Choices type not provided"],
+    },
+  },
+  answers: {
+    type: [answerSchema],
+    default: undefined,
+    required: [true, "Answer type not provided"],
+  },
+});
+
 var quizTaskSchema = new Schema(
   {
-    question: {
-      type: {
-        type: String,
-        enum: ["image", "audio", "video"],
-        required: [true, "Type of the question not provided"],
-      },
-      data: {
-        type: String,
-        required: [true, "Data Source not provided"],
-      },
-      text: {
-        type: String,
-        required: [true, "Question text not provided"],
-      },
-      choices: {
-        type: String,
-        enum: ["checkbox", "radio"],
-        required: [true, "Choices type not provided"],
-      },
-    },
-    answers: {
-      type: [answerSchema],
+    doc_id: { type: Number, required: [true, "Document ID not provided"] },
+    questions: {
+      type: [questionSchema],
       default: undefined,
-      required: [true, "Answer type not provided"],
+      required: [true, "Please specify the questions"],
     },
   },
   {
