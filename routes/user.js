@@ -1,15 +1,40 @@
 var express = require("express"),
   router = express.Router(),
   verifyToken = require("../middlewares/authJWT.js"),
-  { signup, signin } = require("../controllers/auth.controller.js"),
+  {
+    signup,
+    signin,
+    adminsignin,
+  } = require("../controllers/auth.controller.js"),
   { generateNonce } = require("../utils/generateNonce.js"),
-  isSignedIn = require("../middlewares/isSignedIn.js");
+  isSignedIn = require("../middlewares/isSignedIn.js"),
+  isLoggedIn = require("../middlewares/auth");
 
 router.get("/nonce", (req, res) => generateNonce(req, res));
 
-router.post("/login", (req, res) => signin(req, res));
+router.post("/admin/login", (req, res) => adminsignin(req, res));
 
-router.post("/posttweet", isSignedIn, async function (req, res) {
+router.get("/admin/data", verifyToken, (req, res) => {
+  if (!req.user) {
+    res.status(403).send({
+      message: "Invalid JWT token",
+    });
+  } else {
+    res.status(200).send({
+      status: 200,
+      data: {
+        admin: {
+          name: req.user.fullName,
+          email: req.user.email,
+          created: req.user.created,
+        },
+        data: "Admin Data",
+      },
+    });
+  }
+});
+
+router.post("/posttweet", isSignedIn, isLoggedIn, async function (req, res) {
   try {
     const { data: createdTweet } = await client.v2.tweet(req.body.text);
     console.log(
@@ -27,7 +52,7 @@ router.post("/posttweet", isSignedIn, async function (req, res) {
   }
 });
 
-router.post("/postreply", isSignedIn, async function (req, res) {
+router.post("/postreply", isSignedIn, isLoggedIn, async function (req, res) {
   try {
     const { data: createdTweet } = await client.v2.reply(
       req.body.text,
@@ -48,7 +73,7 @@ router.post("/postreply", isSignedIn, async function (req, res) {
   }
 });
 
-router.post("/postthread", isSignedIn, async function (req, res) {
+router.post("/postthread", isSignedIn, isLoggedIn, async function (req, res) {
   try {
     const { data: createdTweet } = await client.v2.tweetThread(req.body.text);
     console.log("Thread posted successfully !!", createdTweet);
